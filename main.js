@@ -12,6 +12,9 @@ const prompt = readline.createInterface({
 
 const __dirname = process.env.PWD;
 
+if (!fs.existsSync('./result')) {
+  fs.mkdir('./result', (err) => 0);
+}
 console.log("please insert correct youtube video");
 
 prompt.question("Download link = ", (link) => {
@@ -25,7 +28,7 @@ prompt.question("Download link = ", (link) => {
         const processDownloading = ora("Downloading please wait...").start();
         fs.writeFileSync(
             `${__dirname}/result/${name}.mp4`,
-            await download(data.urlDown, { rejectUnauthorized: false })
+            await download(data.urlDown, {rejectUnauthorized: false}),
         );
 
         processDownloading.stopAndPersist({
